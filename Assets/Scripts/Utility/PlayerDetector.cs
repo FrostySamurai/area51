@@ -6,7 +6,7 @@ public class PlayerDetector : MonoBehaviour
 {
     [SerializeField] private bool _requireVision = false;
     [SerializeField] private float _raycastAngleStep = 5f;
-    [SerializeField] private LayerMask _raycastIgnore;
+    [SerializeField] private LayerMask _raycastIgnore = new LayerMask();
 
     private List<Vector2> _raycastDirections = new List<Vector2>();
     private float _raycastLength = 0f;
