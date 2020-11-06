@@ -6,6 +6,7 @@ public class PlayerDetector : MonoBehaviour
 {
     [SerializeField] private bool _requireVision = false;
     [SerializeField] private float _raycastAngleStep = 5f;
+    [SerializeField] private LayerMask _raycastIgnore;
 
     private List<Vector2> _raycastDirections = new List<Vector2>();
     private float _raycastLength = 0f;
@@ -43,10 +44,8 @@ public class PlayerDetector : MonoBehaviour
     {
         float direction = player.transform.position.x < transform.position.x ? -1 : 1;
         foreach (Vector2 raycastDirection in _raycastDirections)
-        {
             if (RaycastForPlayer(transform.position, new Vector2(raycastDirection.x * direction, raycastDirection.y),player))
                 return true;
-        }
 
         return false;
     }
@@ -54,14 +53,13 @@ public class PlayerDetector : MonoBehaviour
     private bool RaycastForPlayer(Vector2 position, Vector2 direction, Collider2D player)
     {
         Debug.DrawRay(position, direction * _raycastLength, Color.cyan);
-        RaycastHit2D hit = Physics2D.Raycast(position, direction, _raycastLength);
+        RaycastHit2D hit = Physics2D.Raycast(position, direction, _raycastLength, ~_raycastIgnore);
 
         return hit.collider == player;
     }
 
     private void CalculateRaycastDirections(Light2D light)
     {
-        print(light.pointLightOuterAngle);
         float currentAngle = (light.pointLightOuterAngle / 2) * Mathf.Deg2Rad + 1.5f;
         int raycastCount = Mathf.FloorToInt(light.pointLightOuterAngle / _raycastAngleStep);
 
