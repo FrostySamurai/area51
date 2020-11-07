@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _playerClimbingSpeed = 5f;
     [SerializeField] private float _playerPushingSpeed = 5f;
     [SerializeField] private float _jumpForce = 500f;
-    [SerializeField] private Color _normalColor;
-    [SerializeField] private Color _hiddenColor;
+    [SerializeField] private Color _normalColor = Color.white;
+    [SerializeField] private Color _hiddenColor = Color.white;
     [SerializeField] private PlayerStates _playerState;  
     private Vector2 _velocity;
     private float _bottomBound = 0;
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     // flags
     private bool _isGrounded = true;
     private bool _readyToClimb = false;
-
+    private bool _checkForGroundAfterJump = false;
     public Vector2 Velocity => _rb.velocity;
     public Vector2 Direction { get; private set; }
     public PlayerStates PlayerState { get { return _playerState; } set { _playerState = value; } }
@@ -80,10 +80,18 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool(h_jump, false);
         }
 
-        if (_playerState != PlayerStates.Climbing && _rb.velocity.y >= 0.1) 
-        {       
-            if (_isGrounded = CheckGround())
+        if (_playerState != PlayerStates.Climbing && _rb.velocity.y >= 4) 
+        {
+            _checkForGroundAfterJump = true;
+        }
+
+        if (_checkForGroundAfterJump) 
+        {
+            _isGrounded = CheckGround();
+            if (_isGrounded)
             {
+                _checkForGroundAfterJump = false;
+                _playerState = PlayerStates.Default;
                 _animator.SetBool(h_jump, false);
             }
         }
@@ -102,6 +110,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(h_push, false);
         _animator.SetBool(h_climb, false);
         _animator.SetBool(h_crouch, false);
+        _animator.SetBool(h_grounded, _isGrounded);
         _animator.SetFloat(h_VerticalMovement, 0);
         _spriteRenderer.color = _normalColor;
 
@@ -227,7 +236,7 @@ public class PlayerController : MonoBehaviour
     Collider2D CheckGround() 
     {
         //Collider2D ground = Physics2D.OverlapCircle(_groundCheckPosition.position, _groundCheckRadius, _groundLayer);
-        RaycastHit2D groundHit = Physics2D.BoxCast(transform.position, new Vector2(1, 1f), 0, Vector2.down, 0.6f, 1 << 8);
+        RaycastHit2D groundHit = Physics2D.BoxCast(transform.position, new Vector2(0.7f, 1f), 0, Vector2.down, 0.5f, 1 << 8);
         return groundHit.collider;
     }
 
