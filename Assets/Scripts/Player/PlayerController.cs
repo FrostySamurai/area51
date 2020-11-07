@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
 
     public Vector2 Velocity => _rb.velocity;
     public Vector2 Direction { get; private set; }
+    public PlayerStates PlayerState => _playerState; 
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
