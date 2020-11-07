@@ -7,7 +7,8 @@ public class InputController : MonoBehaviour
     public float VerticalMovement { get; private set; }
 
     public event System.Action OnJump;
-    public event System.Action OnCrouch;
+    public event System.Action OnDownKeyPressed;
+    public event System.Action OnDownKeyReleased;
     public event System.Action OnInteraction;
 
     private void Start()
@@ -26,9 +27,14 @@ public class InputController : MonoBehaviour
             OnJump?.Invoke();
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKey(KeyCode.S))
         {
-            OnCrouch?.Invoke();
+            OnDownKeyPressed?.Invoke();
+        }
+
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            OnDownKeyReleased?.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.E))

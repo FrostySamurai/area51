@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerStates _playerState;  
     private Vector2 _velocity;
     private float _bottomBound = 0;
+
     // components
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
@@ -36,7 +37,8 @@ public class PlayerController : MonoBehaviour
             return _inputController;
         } 
     }
-
+    public Vector2 Velocity => _rb.velocity;
+    public Vector2 Direction { get; private set; }
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -46,7 +48,8 @@ public class PlayerController : MonoBehaviour
 
         _playerState = PlayerStates.Default;
         InputController.OnJump += Jump;
-        InputController.OnCrouch += Crouch;
+        InputController.OnDownKeyPressed += Crouch;
+        InputController.OnDownKeyReleased += ResetPlayerStateFromCrouch;
     }
 
     void OnDestroy()
@@ -54,15 +57,21 @@ public class PlayerController : MonoBehaviour
         if (InputController != null)
         {
             InputController.OnJump -= Jump;
-            InputController.OnCrouch -= Crouch;
+            InputController.OnDownKeyPressed -= Crouch;
+            InputController.OnDownKeyReleased -= ResetPlayerStateFromCrouch;
         }
     }
 
     public void Update()
     {
+        if (InputController.HorizontalMovement < 0)
+            Direction = new Vector2(-1, 0);
+        if (InputController.HorizontalMovement > 0)
+            Direction = new Vector2(1, 0);
+
         CheckLadder();
 
-        if (_rb.velocity.y < 0) 
+        if (_rb.velocity.y < -0.1) 
         {
            _playerState = PlayerStates.Falling;
         }
@@ -96,8 +105,9 @@ public class PlayerController : MonoBehaviour
             case PlayerStates.Default:
                 move = HorizontalMovement();
                 break;
+            case PlayerStates.Hidden:
             case PlayerStates.Crouch:
-                move = CrouchMovement();
+                //move = CrouchMovement();
                 break;
             case PlayerStates.Climbing:
                 _rb.gravityScale = 0f;
@@ -132,16 +142,26 @@ public class PlayerController : MonoBehaviour
 
     void Crouch() 
     {
+        if (_playerState == PlayerStates.Climbing || _playerState == PlayerStates.Falling) 
+            return;
+
         if (_isGrounded && _playerState == PlayerStates.Default)
         {
             _playerState = PlayerStates.Crouch;
+            RaycastHit2D hitInfo = Physics2D.BoxCast(transform.position, new Vector2(0.5f, 0.5f), 0, Vector2.up, 0f, 1 << 9);
+            if (hitInfo.collider != null) 
+            {
+                _playerState = PlayerStates.Hidden;
+            }
             return;
         }
+    }
 
-        if (_playerState == PlayerStates.Crouch)
+    void ResetPlayerStateFromCrouch() 
+    {
+        if (_playerState == PlayerStates.Crouch || _playerState == PlayerStates.Hidden)
         {
             _playerState = PlayerStates.Default;
-            return;
         }
     }
 
@@ -156,8 +176,9 @@ public class PlayerController : MonoBehaviour
 
     Collider2D CheckGround() 
     {
-        Collider2D ground = Physics2D.OverlapCircle(_groundCheckPosition.position, _groundCheckRadius, _groundLayer);
-        return ground;
+        //Collider2D ground = Physics2D.OverlapCircle(_groundCheckPosition.position, _groundCheckRadius, _groundLayer);
+        RaycastHit2D groundHit = Physics2D.BoxCast(transform.position, new Vector2(1, 1f), 0, Vector2.down, 0.2f, 1 << 8);
+        return groundHit.collider;
     }
 
     void CheckLadder() 
