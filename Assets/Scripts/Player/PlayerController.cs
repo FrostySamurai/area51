@@ -180,6 +180,7 @@ public class PlayerController : MonoBehaviour
         }
         else 
         {
+            // fixnut treba 
             if (_playerState == PlayerStates.Climbing)
             {
                 _playerState = PlayerStates.Default;
