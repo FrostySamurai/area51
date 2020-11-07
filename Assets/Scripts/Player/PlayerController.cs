@@ -11,7 +11,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpForce = 500f;
     [SerializeField] private Color _normalColor = Color.white;
     [SerializeField] private Color _hiddenColor = Color.white;
-    [SerializeField] private PlayerStates _playerState;  
+    [SerializeField] private PlayerStates _playerState;
+    [SerializeField] private LayerMask _hideableMasks;
+    [SerializeField] private LayerMask _groundMasks;
+
     private Vector2 _velocity;
     private float _bottomBound = 0;
 
@@ -206,7 +209,7 @@ public class PlayerController : MonoBehaviour
         if (_isGrounded && _playerState == PlayerStates.Default)
         {
             _playerState = PlayerStates.Crouch;
-            RaycastHit2D hitInfo = Physics2D.BoxCast(transform.position, new Vector2(0.5f, 0.5f), 0, Vector2.up, 0f, 1 << 9);
+            RaycastHit2D hitInfo = Physics2D.BoxCast(transform.position, new Vector2(0.5f, 0.5f), 0, Vector2.up, 0f, _hideableMasks);
             if (hitInfo.collider != null) 
             {
                 _playerState = PlayerStates.Hidden;
@@ -236,7 +239,7 @@ public class PlayerController : MonoBehaviour
     Collider2D CheckGround() 
     {
         //Collider2D ground = Physics2D.OverlapCircle(_groundCheckPosition.position, _groundCheckRadius, _groundLayer);
-        RaycastHit2D groundHit = Physics2D.BoxCast(transform.position, new Vector2(0.7f, 1f), 0, Vector2.down, 0.5f, 1 << 8);
+        RaycastHit2D groundHit = Physics2D.BoxCast(transform.position, new Vector2(0.7f, 1f), 0, Vector2.down, 0.5f, _groundMasks);
         return groundHit.collider;
     }
 

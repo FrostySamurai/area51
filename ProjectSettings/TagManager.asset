@@ -18,8 +18,8 @@ TagManager:
   - Hideable
   - Player
   - Enemy
-  - 
-  - 
+  - HideableWithoutPush
+  - HideableObjectGround
   - 
   - 
   - 

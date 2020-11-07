@@ -154,6 +154,12 @@ MonoBehaviour:
   _normalColor: {r: 1, g: 1, b: 1, a: 1}
   _hiddenColor: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
   _playerState: 0
+  _hideableMasks:
+    serializedVersion: 2
+    m_Bits: 4608
+  _groundMasks:
+    serializedVersion: 2
+    m_Bits: 8448
 --- !u!95 &844625130
 Animator:
   serializedVersion: 3

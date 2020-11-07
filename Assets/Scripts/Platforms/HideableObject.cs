@@ -7,9 +7,8 @@ public class HideableObject : MonoBehaviour
     [SerializeField, Range(1, 5)] float _jumpHigherOffset = 2f;
     [SerializeField] bool _jumpAble = false;
     [SerializeField] bool _pushAble = false;
-
-    private int _groundLayerMask = 8;
-    private int _hideableLayerMask = 9;
+    [SerializeField] private LayerMasksEnum _hideableLayerMask;
+    [SerializeField] private LayerMasksEnum _groundLayerMask;  
     private bool _pushing = false;
     private bool _onTop = false;
     private Vector2 _pushingDirection = Vector2.zero;
@@ -73,12 +72,12 @@ public class HideableObject : MonoBehaviour
             if (_downKeyPressed) 
             {
                 _onTop = false;
-                return _hideableLayerMask;
+                return (int)_hideableLayerMask;
             }
-            return _groundLayerMask;
+            return (int)_groundLayerMask;
         }
         _onTop = false;
-        return _pushing ? _groundLayerMask : _hideableLayerMask;
+        return _pushing ? (int)_groundLayerMask : (int)_hideableLayerMask;
     }
 
     void PushCollider() 
@@ -105,7 +104,7 @@ public class HideableObject : MonoBehaviour
         _pushing = _interactionKeyPressed;
         if (_pushing)
         {
-            gameObject.layer = _groundLayerMask;
+            gameObject.layer = (int)_groundLayerMask;
             _rb.sharedMaterial = _player.GetComponent<Rigidbody2D>().sharedMaterial;
             return;
         }
@@ -128,7 +127,7 @@ public class HideableObject : MonoBehaviour
         if(_pushing == false)
             return;
         _pushing = false;
-        gameObject.layer = _onTop ? _groundLayerMask : _hideableLayerMask;
+        gameObject.layer = _onTop ? (int)_groundLayerMask : (int)_hideableLayerMask;
         _rb.sharedMaterial = null;
         _rb.velocity = new Vector2(0, _rb.velocity.y);    
         _player.PlayerState = _player.PlayerState == PlayerStates.Pushing ? _player.PlayerState = PlayerStates.Default : _player.PlayerState;

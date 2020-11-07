@@ -144,8 +144,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e840ffcefb163b146858ebed3081d300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pushOffset: 0.2
+  _pushOffset: 0.15
   _jumpLowerOffset: 0.5
   _jumpHigherOffset: 2
   _jumpAble: 1
   _pushAble: 1
+  _hideableLayerMask: 9
+  _groundLayerMask: 13
