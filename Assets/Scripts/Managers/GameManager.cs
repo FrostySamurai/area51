@@ -16,9 +16,9 @@ public class GameManager : MonoBehaviour
 
     public void ToggleControllers(bool enabled)
     {
-        AppData.InputController.enabled = enabled;
+        AppData.InputController.IsEnabled = enabled;
         foreach (EnemyController enemy in FindObjectsOfType<EnemyController>(true))
-            enemy.enabled = false;
+            enemy.enabled = enabled;
     }
 
     public void StartGame()

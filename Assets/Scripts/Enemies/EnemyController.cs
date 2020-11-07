@@ -27,6 +27,11 @@ public class EnemyController : MonoBehaviour
         GoToNextPatrolPoint();
     }
 
+    private void OnDisable()
+    {
+        _animator.SetFloat("velocityX", 0f);
+    }
+
     private void Update()
     {
         WaitAtPatrolPoint();

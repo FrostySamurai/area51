@@ -12,10 +12,13 @@ public class InputController : MonoBehaviour
     public event System.Action OnInteractionPressed;
     public event System.Action OnInteraction;
     public event System.Action OnInteractionReleased;
+    
+    public bool IsEnabled { get; set; }
 
     void Awake() 
     {
         AppData.InputController = this;
+        IsEnabled = true;
     }
 
     private void Start()
@@ -32,6 +35,14 @@ public class InputController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            OnInteractionPressed?.Invoke();
+        }
+
+        if (!IsEnabled)
+            return;
+
         HorizontalMovement = Input.GetAxis("Horizontal");
         VerticalMovement = Input.GetAxis("Vertical");
 
@@ -48,11 +59,6 @@ public class InputController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.S))
         {
             OnDownKeyReleased?.Invoke();
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            OnInteractionPressed?.Invoke();
         }
 
         if (Input.GetKey(KeyCode.K))

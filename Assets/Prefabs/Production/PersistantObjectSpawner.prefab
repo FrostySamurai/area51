@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistantObjectPrefab: {fileID: 5024603966527816712, guid: fd8f19aa9c88aa54ea060bcc88e4463a, type: 3}
+  _storyTellingCanvasPrefab: {fileID: 2536957624028930769, guid: 5d6927cc68ca55940b79c2246347b258, type: 3}
