@@ -9,10 +9,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _playerClimbingSpeed = 5f;
     [SerializeField] private float _jumpForce = 500f;
 
-    [SerializeField] private Transform _groundCheckPosition;
-    [SerializeField] private float _groundCheckRadius;
-    [SerializeField] private LayerMask _groundLayer;
-
     [SerializeField] private PlayerStates _playerState;  
     private Vector2 _velocity;
     private float _bottomBound = 0;
@@ -26,17 +22,6 @@ public class PlayerController : MonoBehaviour
     private bool _isGrounded = true;
     private bool _readyToClimb = false;
 
-    //input controller
-    private InputController _inputController;
-    public InputController InputController 
-    {
-        get 
-        {
-            if (_inputController == null)
-                _inputController = FindObjectOfType<InputController>();
-            return _inputController;
-        } 
-    }
     public Vector2 Velocity => _rb.velocity;
     public Vector2 Direction { get; private set; }
     void Start()
@@ -47,36 +32,36 @@ public class PlayerController : MonoBehaviour
         _bottomBound = _boxCollider.offset.y - (_boxCollider.size.y / 2f);
 
         _playerState = PlayerStates.Default;
-        InputController.OnJump += Jump;
-        InputController.OnDownKeyPressed += Crouch;
-        InputController.OnDownKeyReleased += ResetPlayerStateFromCrouch;
+        AppData.InputController.OnJump += Jump;
+        AppData.InputController.OnDownKeyPressed += Crouch;
+        AppData.InputController.OnDownKeyReleased += ResetPlayerStateFromCrouch;
     }
 
     void OnDestroy()
     {
-        if (InputController != null)
+        if (AppData.InputController != null)
         {
-            InputController.OnJump -= Jump;
-            InputController.OnDownKeyPressed -= Crouch;
-            InputController.OnDownKeyReleased -= ResetPlayerStateFromCrouch;
+            AppData.InputController.OnJump -= Jump;
+            AppData.InputController.OnDownKeyPressed -= Crouch;
+            AppData.InputController.OnDownKeyReleased -= ResetPlayerStateFromCrouch;
         }
     }
 
     public void Update()
     {
-        if (InputController.HorizontalMovement < 0)
+        if (AppData.InputController.HorizontalMovement < 0)
             Direction = new Vector2(-1, 0);
-        if (InputController.HorizontalMovement > 0)
+        if (AppData.InputController.HorizontalMovement > 0)
             Direction = new Vector2(1, 0);
 
         CheckLadder();
 
-        if (_rb.velocity.y < -0.1) 
+        if (_playerState != PlayerStates.Climbing && _rb.velocity.y < -0.1) 
         {
            _playerState = PlayerStates.Falling;
         }
 
-        if (_readyToClimb && InputController.VerticalMovement > 0) 
+        if (_readyToClimb && AppData.InputController.VerticalMovement > 0) 
         {
             _playerState = PlayerStates.Climbing;
             _readyToClimb = false;
@@ -120,22 +105,22 @@ public class PlayerController : MonoBehaviour
 
     Vector2 HorizontalMovement() 
     {
-        float horizontalMovement = InputController.HorizontalMovement * _playerSpeed;
+        float horizontalMovement = AppData.InputController.HorizontalMovement * _playerSpeed;
         Vector2 velocity = new Vector2(horizontalMovement, _rb.velocity.y);
         return velocity;
     }
 
     Vector2 ClimbingMovement() 
     {
-        float verticalMovement = InputController.VerticalMovement * _playerClimbingSpeed;
-        float horizontalMovement = InputController.HorizontalMovement * _playerClimbingSpeed;
+        float verticalMovement = AppData.InputController.VerticalMovement * _playerClimbingSpeed;
+        float horizontalMovement = AppData.InputController.HorizontalMovement * _playerClimbingSpeed;
         Vector2 velocity = new Vector2(horizontalMovement, verticalMovement);
         return velocity;
     }
 
     Vector2 CrouchMovement()
     {
-        float horizontalMovement = InputController.HorizontalMovement * _playerCrouchSpeed;
+        float horizontalMovement = AppData.InputController.HorizontalMovement * _playerCrouchSpeed;
         Vector2 velocity = new Vector2(horizontalMovement, _rb.velocity.y);
         return velocity;
     }

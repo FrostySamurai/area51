@@ -15,31 +15,20 @@ public class HideableObject : MonoBehaviour
 
     private Rigidbody2D _rb;
 
-    private InputController _inputController;
-    public InputController InputController
-    {
-        get
-        {
-            if (_inputController == null)
-                _inputController = FindObjectOfType<InputController>();
-            return _inputController;
-        }
-    }
-
     private void Start()
     {
-        InputController.OnDownKeyPressed += DownKeyPressed;
-        InputController.OnDownKeyReleased += DownKeyReleased;
+        AppData.InputController.OnDownKeyPressed += DownKeyPressed;
+        AppData.InputController.OnDownKeyReleased += DownKeyReleased;
         _rb = GetComponent<Rigidbody2D>();
         _player = FindObjectOfType<PlayerController>();
     }
 
     private void OnDestroy()
     {
-        if (InputController != null)
+        if (AppData.InputController != null)
         {
-            InputController.OnDownKeyPressed -= DownKeyPressed;
-            InputController.OnDownKeyReleased -= DownKeyReleased;
+            AppData.InputController.OnDownKeyPressed -= DownKeyPressed;
+            AppData.InputController.OnDownKeyReleased -= DownKeyReleased;
         }
     }
 
@@ -90,14 +79,14 @@ public class HideableObject : MonoBehaviour
 
         if (!_registerPush && firstHit.collider != null && secondHit.collider == null)
         {
-            InputController.OnInteraction += Push;
+            AppData.InputController.OnInteraction += Push;
             _registerPush = true;
             _player = firstHit.collider.GetComponent<PlayerController>();
         }
 
         if (_registerPush && (firstHit.collider == null || secondHit.collider != null))
         {
-            InputController.OnInteraction -= Push;
+            AppData.InputController.OnInteraction -= Push;
             _registerPush = false;
             ResetProperties();
         }

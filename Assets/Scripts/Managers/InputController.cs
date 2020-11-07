@@ -11,6 +11,18 @@ public class InputController : MonoBehaviour
     public event System.Action OnDownKeyReleased;
     public event System.Action OnInteraction;
 
+    void Awake() 
+    {
+        if (AppData.InputController != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        AppData.InputController = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start()
     {
         HorizontalMovement = 0;
