@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _playerClimbingSpeed = 5f;
     [SerializeField] private float _playerPushingSpeed = 5f;
     [SerializeField] private float _jumpForce = 500f;
-
+    [SerializeField] private Color _normalColor;
+    [SerializeField] private Color _hiddenColor;
     [SerializeField] private PlayerStates _playerState;  
     private Vector2 _velocity;
     private float _bottomBound = 0;
@@ -27,11 +28,12 @@ public class PlayerController : MonoBehaviour
     public Vector2 Velocity => _rb.velocity;
     public Vector2 Direction { get; private set; }
     public PlayerStates PlayerState { get { return _playerState; } set { _playerState = value; } }
-
+    public bool IsGrounded => _isGrounded;
 
     protected readonly int h_horizontalMovement = Animator.StringToHash("HorizontalMovement");
     protected readonly int h_VerticalMovement = Animator.StringToHash("VerticalMovement");
     protected readonly int h_jump = Animator.StringToHash("Jump");
+    protected readonly int h_grounded = Animator.StringToHash("Grounded");
     protected readonly int h_crouch = Animator.StringToHash("Crouch");
     protected readonly int h_climb = Animator.StringToHash("Climb");
     protected readonly int h_push = Animator.StringToHash("Push");
@@ -101,6 +103,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(h_climb, false);
         _animator.SetBool(h_crouch, false);
         _animator.SetFloat(h_VerticalMovement, 0);
+        _spriteRenderer.color = _normalColor;
 
         switch (_playerState)
         {
@@ -122,8 +125,11 @@ public class PlayerController : MonoBehaviour
                 _animator.SetBool(h_push, true);
                 break;
             case PlayerStates.Hidden:
+                _spriteRenderer.color = _hiddenColor;
+                _animator.SetBool(h_crouch, true);
+                break;
             case PlayerStates.Crouch:
-                //move = CrouchMovement();
+                //move = CrouchMovement();               
                 _animator.SetBool(h_crouch, true);
                 break;
             case PlayerStates.Climbing:

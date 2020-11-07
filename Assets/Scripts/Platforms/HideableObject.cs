@@ -3,7 +3,7 @@
 public class HideableObject : MonoBehaviour
 {
     [SerializeField, Range(0,1)] float _pushOffset = 0.2f;
-    [SerializeField, Range(0, 1)] float _jumpLowerOffset = 0.5f;
+    [SerializeField, Range(0, 2)] float _jumpLowerOffset = 0.5f;
     [SerializeField, Range(1, 5)] float _jumpHigherOffset = 2f;
     [SerializeField] bool _jumpAble = false;
     [SerializeField] bool _pushAble = false;
@@ -88,7 +88,7 @@ public class HideableObject : MonoBehaviour
         RaycastHit2D firstHit = Physics2D.BoxCast(transform.position, new Vector2(0.8f, 0.8f), 0, -_pushingDirection, _pushOffset, 1 << 10);
         RaycastHit2D secondHit = Physics2D.BoxCast(transform.position, new Vector2(0.8f, 0.8f), 0, -_pushingDirection, 0.01f, 1 << 10);
 
-        if (_interactionKeyPressed && firstHit.collider != null && secondHit.collider == null)
+        if (_interactionKeyPressed && _player.IsGrounded && firstHit.collider != null && secondHit.collider == null)
         {
             _pushing = true;
             Push();

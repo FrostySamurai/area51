@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pushOffset: 0.2
-  _jumpLowerOffset: 0.5
-  _jumpHigherOffset: 2
+  _jumpLowerOffset: 1
+  _jumpHigherOffset: 2.2
   _jumpAble: 1
-  _pushAble: 1
+  _pushAble: 0
