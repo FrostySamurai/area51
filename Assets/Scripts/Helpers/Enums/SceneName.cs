@@ -1,5 +1,5 @@
 ﻿public enum SceneName
 {
-    TestName,
-    MisoTestScene
+    MainMenu = 0,
+    Level1 =  1
 }

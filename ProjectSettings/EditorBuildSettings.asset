@@ -5,13 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/_Scenes/martin-devScene.unity
-    guid: 21af0469ac1ba404a9c371b29b43b062
+    path: Assets/_Scenes/Production/MainMenu.unity
+    guid: bda87f423d37e994bb9c2dfe5bdacf32
   - enabled: 1
-    path: Assets/_Scenes/MisoTestScene.unity
-    guid: 8b57990ded9c8084b943ca7e265cf5fb
+    path: Assets/_Scenes/TestLevel.unity
+    guid: 9d61c6e842f1604429be515db3f0facf
   m_configObjects: {}

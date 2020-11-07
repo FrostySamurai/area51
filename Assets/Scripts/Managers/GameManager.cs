@@ -13,5 +13,19 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Detected.");
     }
+
+    public void StartGame()
+    {
+        AppData.SceneLoader.LoadScene(SceneName.Level1);
+    }
+
+    public void QuitApplication()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }
 

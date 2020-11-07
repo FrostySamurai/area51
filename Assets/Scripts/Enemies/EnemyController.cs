@@ -16,10 +16,12 @@ public class EnemyController : MonoBehaviour
     private Transform _targetPatrolPoint = null;
 
     private Rigidbody2D _rigidbody = null;
+    private Animator _animator = null;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
 
         PopulatePatrolPoints();
         GoToNextPatrolPoint();
@@ -33,6 +35,12 @@ public class EnemyController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        UpdateAnimator();
+    }
+
+    private void UpdateAnimator()
+    {
+        _animator.SetFloat("velocityX", _rigidbody.velocity.x);
     }
 
     private void WaitAtPatrolPoint()
