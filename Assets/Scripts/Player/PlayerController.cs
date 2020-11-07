@@ -221,7 +221,7 @@ public class PlayerController : MonoBehaviour
     Collider2D CheckGround() 
     {
         //Collider2D ground = Physics2D.OverlapCircle(_groundCheckPosition.position, _groundCheckRadius, _groundLayer);
-        RaycastHit2D groundHit = Physics2D.BoxCast(transform.position, new Vector2(1, 1f), 0, Vector2.down, 0.1f, 1 << 8);
+        RaycastHit2D groundHit = Physics2D.BoxCast(transform.position, new Vector2(1, 1f), 0, Vector2.down, 0.6f, 1 << 8);
         return groundHit.collider;
     }
 
