@@ -195,18 +195,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 193560407}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4708f199787e3de42bb98f622917207e, type: 3}
+  m_Script: {fileID: 11500000, guid: e840ffcefb163b146858ebed3081d300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpAble: 1
   _pushAble: 1
-  _pushing: 0
-  _onTop: 0
-  _registerPush: 0
-  _pushingDirection: {x: 0, y: 0}
-  _player: {fileID: 0}
-  _rb: {fileID: 0}
-  _inputController: {fileID: 0}
 --- !u!61 &193560409
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -785,18 +778,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1342211395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4708f199787e3de42bb98f622917207e, type: 3}
+  m_Script: {fileID: 11500000, guid: e840ffcefb163b146858ebed3081d300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpAble: 1
   _pushAble: 1
-  _pushing: 0
-  _onTop: 0
-  _registerPush: 0
-  _pushingDirection: {x: 0, y: 0}
-  _player: {fileID: 0}
-  _rb: {fileID: 0}
-  _inputController: {fileID: 0}
 --- !u!50 &1342211401
 Rigidbody2D:
   serializedVersion: 4
