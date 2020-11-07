@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3856403843213883388}
   - component: {fileID: 3856403843213883389}
   m_Layer: 8
-  m_Name: wall
+  m_Name: short-platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,16 +47,16 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.17999999, y: 0.17, z: 0.17999999, w: 0.17}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 20, y: 1}
-    adaptiveTilingThreshold: 0.33
+    oldSize: {x: 6.04, y: 0.75}
+    newSize: {x: 37.9, y: 0.75}
+    adaptiveTilingThreshold: 0.955
     drawMode: 2
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 23.48, y: 1}
+  m_Size: {x: 37.2, y: 0.75}
   m_EdgeRadius: 0
 --- !u!212 &3856403843213883389
 SpriteRenderer:
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,13 +98,13 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e925a0fcb5c8703459b74337364eeea2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7fe9ef4cdd4f5d543927670acb139502, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 20, y: 1}
-  m_AdaptiveModeThreshold: 0.33
+  m_Size: {x: 37.9, y: 0.75}
+  m_AdaptiveModeThreshold: 0.955
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
