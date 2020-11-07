@@ -24,6 +24,12 @@ public class InputController : MonoBehaviour
         VerticalMovement = 0;
     }
 
+    private void OnDisable()
+    {
+        HorizontalMovement = 0;
+        VerticalMovement = 0;
+    }
+
     private void Update()
     {
         HorizontalMovement = Input.GetAxis("Horizontal");

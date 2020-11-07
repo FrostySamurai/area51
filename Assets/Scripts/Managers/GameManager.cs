@@ -14,6 +14,13 @@ public class GameManager : MonoBehaviour
         Debug.Log("Detected.");
     }
 
+    public void ToggleControllers(bool enabled)
+    {
+        AppData.InputController.enabled = enabled;
+        foreach (EnemyController enemy in FindObjectsOfType<EnemyController>(true))
+            enemy.enabled = false;
+    }
+
     public void StartGame()
     {
         AppData.SceneLoader.LoadScene(SceneName.Level1);
