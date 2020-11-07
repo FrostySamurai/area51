@@ -150,7 +150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6374149950586435707}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.195, y: 0.002, z: 0}
+  m_LocalPosition: {x: 0.285, y: 0.002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5046493830944646214}
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.3
   m_Color: {r: 0.8490566, g: 0.79032815, b: 0.500623, a: 1}
   m_Intensity: 1
   m_LightVolumeOpacity: 0.5
@@ -181,8 +181,8 @@ MonoBehaviour:
   m_AlphaBlendOnOverlap: 0
   m_ShadowIntensity: 0.996
   m_ShadowVolumeIntensity: 0
-  m_PointLightInnerAngle: 18
-  m_PointLightOuterAngle: 34
+  m_PointLightInnerAngle: 4
+  m_PointLightOuterAngle: 60
   m_PointLightInnerRadius: 0.5
   m_PointLightOuterRadius: 4
   m_PointLightDistance: 3
@@ -223,10 +223,10 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0.021657107, y: 3.9959617}
-      - {x: -1.1632766, y: 3.82044}
-      - {x: -0.15463418, y: 0.56984663}
+      - {x: -1.9888419, y: 3.475787}
+      - {x: -0.31493786, y: 0.52977073}
       - {x: 0.003031373, y: 0.0428468}
-      - {x: 1.1647176, y: 3.8262086}
+      - {x: 1.9742523, y: 3.465525}
 --- !u!114 &6374149950586435709
 MonoBehaviour:
   m_ObjectHideFlags: 0

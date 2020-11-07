@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour
 
     private void UpdateAnimator()
     {
-        _animator.SetFloat("velocityX", _rigidbody.velocity.x);
+        _animator.SetFloat("velocityX", Mathf.Abs(_rigidbody.velocity.x));
     }
 
     private void WaitAtPatrolPoint()
