@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _playerSpeed = 5f;
     [SerializeField] private float _playerCrouchSpeed = 5f;
     [SerializeField] private float _playerClimbingSpeed = 5f;
+    [SerializeField] private float _playerPushingSpeed = 5f;
     [SerializeField] private float _jumpForce = 500f;
 
     [SerializeField] private PlayerStates _playerState;  
@@ -24,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     public Vector2 Velocity => _rb.velocity;
     public Vector2 Direction { get; private set; }
-    public PlayerStates PlayerState => _playerState; 
+    public PlayerStates PlayerState { get { return _playerState; } set { _playerState = value; } }
 
     void Start()
     {
@@ -92,6 +93,9 @@ public class PlayerController : MonoBehaviour
             case PlayerStates.Default:
                 move = HorizontalMovement();
                 break;
+            case PlayerStates.Pushing:
+                move = PushingMovement();
+                break;
             case PlayerStates.Hidden:
             case PlayerStates.Crouch:
                 //move = CrouchMovement();
@@ -124,6 +128,13 @@ public class PlayerController : MonoBehaviour
     {
         float horizontalMovement = AppData.InputController.HorizontalMovement * _playerCrouchSpeed;
         Vector2 velocity = new Vector2(horizontalMovement, _rb.velocity.y);
+        return velocity;
+    }
+
+    Vector2 PushingMovement()
+    {
+        float horizontalMovement = AppData.InputController.HorizontalMovement * _playerPushingSpeed;
+        Vector2 velocity = new Vector2(horizontalMovement, 0);
         return velocity;
     }
 
@@ -178,9 +189,9 @@ public class PlayerController : MonoBehaviour
                 _readyToClimb = true;
             }        
         }
-        else 
+
+        if(hitInfo.collider == null) 
         {
-            // fixnut treba 
             if (_playerState == PlayerStates.Climbing)
             {
                 _playerState = PlayerStates.Default;

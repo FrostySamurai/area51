@@ -111,6 +111,7 @@ public class HideableObject : MonoBehaviour
             return;
         }
         _rb.velocity = new Vector2(_player.Velocity.x, _rb.velocity.y);
+        _player.PlayerState = PlayerStates.Pushing;
     }
 
     void ResetProperties() 
@@ -118,6 +119,7 @@ public class HideableObject : MonoBehaviour
         gameObject.layer = _onTop ? _hideableLayerMask : _groundLayerMask;
         _rb.velocity = new Vector2(0, _rb.velocity.y);
         _pushing = false;
+        _player.PlayerState = _player.PlayerState == PlayerStates.Pushing ? _player.PlayerState = PlayerStates.Default : _player.PlayerState;
     }
 }
 
