@@ -27,13 +27,13 @@ public class SwitchButton : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (_inputController != null)
-            _inputController.OnInteraction += Interact;
+            _inputController.OnInteractionPressed += Interact;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (_inputController != null)
-            _inputController.OnInteraction -= Interact;
+            _inputController.OnInteractionPressed -= Interact;
     }
 
     private void Interact()

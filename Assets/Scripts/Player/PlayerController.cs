@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
     private BoxCollider2D _boxCollider;
-    
+    private Animator _animator;
+
     // flags
     private bool _isGrounded = true;
     private bool _readyToClimb = false;
@@ -33,17 +34,19 @@ public class PlayerController : MonoBehaviour
     protected readonly int h_jump = Animator.StringToHash("Jump");
     protected readonly int h_crouch = Animator.StringToHash("Crouch");
     protected readonly int h_climb = Animator.StringToHash("Climb");
+    protected readonly int h_push = Animator.StringToHash("Push");
 
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _boxCollider = GetComponent<BoxCollider2D>();
+        _animator = GetComponent<Animator>();
         _bottomBound = _boxCollider.offset.y - (_boxCollider.size.y / 2f);
 
         _playerState = PlayerStates.Default;
         AppData.InputController.OnJump += Jump;
-        AppData.InputController.OnDownKeyPressed += Crouch;
+        AppData.InputController.OnDownKey += Crouch;
         AppData.InputController.OnDownKeyReleased += ResetPlayerStateFromCrouch;
     }
 
@@ -52,29 +55,27 @@ public class PlayerController : MonoBehaviour
         if (AppData.InputController != null)
         {
             AppData.InputController.OnJump -= Jump;
-            AppData.InputController.OnDownKeyPressed -= Crouch;
+            AppData.InputController.OnDownKey -= Crouch;
             AppData.InputController.OnDownKeyReleased -= ResetPlayerStateFromCrouch;
         }
     }
 
     public void Update()
     {
-        if (AppData.InputController.HorizontalMovement < 0)
-            Direction = new Vector2(-1, 0);
-        if (AppData.InputController.HorizontalMovement > 0)
-            Direction = new Vector2(1, 0);
-
+        CheckDirection();
         CheckLadder();
 
         if (_playerState != PlayerStates.Climbing && _rb.velocity.y < -0.1) 
         {
            _playerState = PlayerStates.Falling;
+           _animator.SetBool(h_jump, true);
         }
 
         if (_readyToClimb && AppData.InputController.VerticalMovement > 0) 
         {
             _playerState = PlayerStates.Climbing;
             _readyToClimb = false;
+            _animator.SetBool(h_jump, false);
         }
        
     }
@@ -88,32 +89,62 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 move = Vector2.zero;
         _rb.gravityScale = 1f;
+
+        _animator.SetBool(h_push, false);
+        _animator.SetBool(h_climb, false);
+        _animator.SetBool(h_crouch, false);
+        _animator.SetFloat(h_VerticalMovement, 0);
+
         switch (_playerState)
         {
             case PlayerStates.Falling:
                 _isGrounded = CheckGround();
                 move = HorizontalMovement();
-                if (_isGrounded)
+                if (_isGrounded) 
+                {
                     _playerState = PlayerStates.Default;
-                
+                    _animator.SetBool(h_jump, false);
+                }              
                 break;
             case PlayerStates.Default:
                 move = HorizontalMovement();
+                _animator.SetFloat(h_horizontalMovement, Mathf.Abs(AppData.InputController.HorizontalMovement));
                 break;
             case PlayerStates.Pushing:
                 move = PushingMovement();
+                _animator.SetBool(h_push, true);
                 break;
             case PlayerStates.Hidden:
             case PlayerStates.Crouch:
                 //move = CrouchMovement();
+                _animator.SetBool(h_crouch, true);
                 break;
             case PlayerStates.Climbing:
                 _rb.gravityScale = 0f;
                 move = ClimbingMovement();
+                _animator.SetFloat(h_VerticalMovement, Mathf.Abs(AppData.InputController.VerticalMovement));
+                _animator.SetBool(h_climb, true) ;
                 break;
         }
 
         _rb.velocity = Vector2.SmoothDamp(_rb.velocity, move, ref _velocity, _movementSmoothStep);
+    }
+
+    void CheckDirection() 
+    {
+        if (_playerState == PlayerStates.Pushing)
+            return;
+
+        if (AppData.InputController.HorizontalMovement < 0)
+        {
+            Direction = new Vector2(-1, 0);
+            _spriteRenderer.flipX = true;
+        }
+        if (AppData.InputController.HorizontalMovement > 0)
+        {
+            Direction = new Vector2(1, 0);
+            _spriteRenderer.flipX = false;
+        }
     }
 
     Vector2 HorizontalMovement() 
@@ -176,6 +207,7 @@ public class PlayerController : MonoBehaviour
         {
             _isGrounded = false;
             _rb.AddForce(new Vector2(0f, _jumpForce));
+            _animator.SetBool(h_jump, true);
         }
     }
 

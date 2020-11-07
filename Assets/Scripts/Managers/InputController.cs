@@ -7,9 +7,11 @@ public class InputController : MonoBehaviour
     public float VerticalMovement { get; private set; }
 
     public event System.Action OnJump;
-    public event System.Action OnDownKeyPressed;
+    public event System.Action OnDownKey;
     public event System.Action OnDownKeyReleased;
+    public event System.Action OnInteractionPressed;
     public event System.Action OnInteraction;
+    public event System.Action OnInteractionReleased;
 
     void Awake() 
     {
@@ -27,14 +29,14 @@ public class InputController : MonoBehaviour
         HorizontalMovement = Input.GetAxis("Horizontal");
         VerticalMovement = Input.GetAxis("Vertical");
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.J))
         {
             OnJump?.Invoke();
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            OnDownKeyPressed?.Invoke();
+            OnDownKey?.Invoke();
         }
 
         if (Input.GetKeyUp(KeyCode.S))
@@ -42,9 +44,19 @@ public class InputController : MonoBehaviour
             OnDownKeyReleased?.Invoke();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            OnInteractionPressed?.Invoke();
+        }
+
+        if (Input.GetKey(KeyCode.K))
         {
             OnInteraction?.Invoke();
+        }
+
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            OnInteractionReleased?.Invoke();
         }
     }
 }
