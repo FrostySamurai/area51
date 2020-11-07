@@ -716,42 +716,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4383804763238471887, guid: 02dcb1885334ea44e81a10050649e33b, type: 3}
-      propertyPath: _playerPushingSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4383804763238471887, guid: 02dcb1885334ea44e81a10050649e33b, type: 3}
-      propertyPath: _normalColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4383804763238471887, guid: 02dcb1885334ea44e81a10050649e33b, type: 3}
-      propertyPath: _normalColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4383804763238471887, guid: 02dcb1885334ea44e81a10050649e33b, type: 3}
-      propertyPath: _normalColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4383804763238471887, guid: 02dcb1885334ea44e81a10050649e33b, type: 3}
-      propertyPath: _normalColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4383804763238471887, guid: 02dcb1885334ea44e81a10050649e33b, type: 3}
-      propertyPath: _hiddenColor.r
-      value: 0.5188679
-      objectReference: {fileID: 0}
-    - target: {fileID: 4383804763238471887, guid: 02dcb1885334ea44e81a10050649e33b, type: 3}
-      propertyPath: _hiddenColor.g
-      value: 0.5188679
-      objectReference: {fileID: 0}
-    - target: {fileID: 4383804763238471887, guid: 02dcb1885334ea44e81a10050649e33b, type: 3}
-      propertyPath: _hiddenColor.b
-      value: 0.5188679
-      objectReference: {fileID: 0}
-    - target: {fileID: 4383804763238471887, guid: 02dcb1885334ea44e81a10050649e33b, type: 3}
-      propertyPath: _hiddenColor.a
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02dcb1885334ea44e81a10050649e33b, type: 3}
 --- !u!1 &563550357
@@ -1544,7 +1508,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 94924a7cb84bc1c40968b5ced2b80f05, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c1a7847eea73b2c4fbe4e7245945a298, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
