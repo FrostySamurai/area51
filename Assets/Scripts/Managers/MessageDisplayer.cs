@@ -39,6 +39,14 @@ public class MessageDisplayer : MonoBehaviour
 
     public void ConfirmMessage()
     {
+        if (AppData.GameManager.GameOver)
+        {
+            AppData.GameManager.RestartLevel();
+            _isMessageDisplayed = false;
+            gameObject.SetActive(false);
+            return;
+        }
+
         if (_messagesToDisplay.Count > 0)
         {
             _text.text = _messagesToDisplay.Dequeue();

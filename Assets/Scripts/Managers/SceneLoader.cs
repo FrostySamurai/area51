@@ -4,9 +4,17 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    private SceneName _currentScene;
+
     private void Awake()
     {
         AppData.SceneLoader = this;
+        _currentScene = SceneName.MainMenu;
+    }
+
+    public void RestartLevel()
+    {
+        LoadScene(_currentScene);
     }
 
     public void LoadScene(SceneName scene)
@@ -21,6 +29,7 @@ public class SceneLoader : MonoBehaviour
         while (!loader.isDone)
             yield return null;
 
+        _currentScene = scene;
         // MH: if we need to do something after scene load or some such
     }
 }

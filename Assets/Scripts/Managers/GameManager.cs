@@ -3,15 +3,25 @@
 public class GameManager : MonoBehaviour
 {
     public bool LevelIsDone = false;
+    public bool GameOver { get; private set; }
 
     private void Awake()
     {
         AppData.GameManager = this;
+        GameOver = false;
     }
 
     public void PlayerDetected()
     {
-        Debug.Log("Detected.");
+        GameOver = true;
+        AppData.MessageDisplayer.DisplayMessage("You've been found!");
+    }
+
+    public void RestartLevel()
+    {
+        GameOver = false;
+        ToggleControllers(true);
+        AppData.SceneLoader.RestartLevel();
     }
 
     public void ToggleControllers(bool enabled)
