@@ -2,6 +2,8 @@
 
 public class GameManager : MonoBehaviour
 {
+    public bool LevelIsDone = false;
+
     private void Awake()
     {
         if (AppData.GameManager != null)

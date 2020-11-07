@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/martin-devScene.unity
     guid: 21af0469ac1ba404a9c371b29b43b062
+  - enabled: 1
+    path: Assets/_Scenes/MisoTestScene.unity
+    guid: 8b57990ded9c8084b943ca7e265cf5fb
   m_configObjects: {}
