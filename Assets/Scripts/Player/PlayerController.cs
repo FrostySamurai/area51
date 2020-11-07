@@ -27,6 +27,13 @@ public class PlayerController : MonoBehaviour
     public Vector2 Direction { get; private set; }
     public PlayerStates PlayerState { get { return _playerState; } set { _playerState = value; } }
 
+
+    protected readonly int h_horizontalMovement = Animator.StringToHash("HorizontalMovement");
+    protected readonly int h_VerticalMovement = Animator.StringToHash("VerticalMovement");
+    protected readonly int h_jump = Animator.StringToHash("Jump");
+    protected readonly int h_crouch = Animator.StringToHash("Crouch");
+    protected readonly int h_climb = Animator.StringToHash("Climb");
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();

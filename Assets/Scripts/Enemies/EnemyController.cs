@@ -64,7 +64,7 @@ public class EnemyController : MonoBehaviour
 
         float direction = targetX < enemyX ? -1f : 1f;
 
-        transform.localScale = new Vector2(direction, 1f);
+        transform.localScale = new Vector2(direction * Mathf.Abs(transform.localScale.x), 1f * Mathf.Abs(transform.localScale.y));
         SetVelocity(_movementSpeed * direction, _rigidbody.velocity.y);
     }
 
