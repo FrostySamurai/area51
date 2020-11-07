@@ -65,7 +65,7 @@ public class EnemyController : MonoBehaviour
         float direction = targetX < enemyX ? -1f : 1f;
 
         transform.localScale = new Vector2(direction, 1f);
-        _rigidbody.velocity = new Vector2(_movementSpeed * direction, 0f);
+        SetVelocity(_movementSpeed * direction, _rigidbody.velocity.y);
     }
 
     private void ReachedPatrolPoint()
@@ -73,7 +73,7 @@ public class EnemyController : MonoBehaviour
         if (_targetPatrolPoint == null)
             return;
 
-        _rigidbody.velocity = Vector2.zero;
+        SetVelocity(0f, 0f);
 
         if (_patrolPointStayTime > 0f)
         {
@@ -102,6 +102,11 @@ public class EnemyController : MonoBehaviour
             return;
 
         _targetPatrolPoint = _patrolPoints.Dequeue();
+    }
+
+    private void SetVelocity(float x, float y)
+    {
+        _rigidbody.velocity = new Vector2(x, y);
     }
 }
 
