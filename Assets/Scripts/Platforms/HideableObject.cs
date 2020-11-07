@@ -12,17 +12,20 @@ public class HideableObject : MonoBehaviour
     private int _hideableLayerMask = 9;
     private bool _pushing = false;
     private bool _onTop = false;
-    private bool _registerPush = false;
     private Vector2 _pushingDirection = Vector2.zero;
     private bool _downKeyPressed = false;
+    private bool _interactionKeyPressed = false;
     private PlayerController _player;
 
     private Rigidbody2D _rb;
 
     private void Start()
     {
-        AppData.InputController.OnDownKeyPressed += DownKeyPressed;
+        AppData.InputController.OnDownKey += DownKeyPressed;
         AppData.InputController.OnDownKeyReleased += DownKeyReleased;
+        AppData.InputController.OnInteraction += InteractionPressed;
+        AppData.InputController.OnInteractionReleased += InteractionReleased;
+
         _rb = GetComponent<Rigidbody2D>();
         _player = FindObjectOfType<PlayerController>();
     }
@@ -31,8 +34,10 @@ public class HideableObject : MonoBehaviour
     {
         if (AppData.InputController != null)
         {
-            AppData.InputController.OnDownKeyPressed -= DownKeyPressed;
+            AppData.InputController.OnDownKey -= DownKeyPressed;
             AppData.InputController.OnDownKeyReleased -= DownKeyReleased;
+            AppData.InputController.OnInteraction -= InteractionPressed;
+            AppData.InputController.OnInteractionReleased -= InteractionReleased;
         }
     }
 
@@ -55,6 +60,8 @@ public class HideableObject : MonoBehaviour
 
     void DownKeyPressed() => _downKeyPressed = true;
     void DownKeyReleased() => _downKeyPressed = false;
+    void InteractionPressed() => _interactionKeyPressed = true;
+    void InteractionReleased() => _interactionKeyPressed = false;
 
     int JumpCollider() 
     {
@@ -78,27 +85,24 @@ public class HideableObject : MonoBehaviour
     {
         if(!_pushing)
             _pushingDirection = _player.Direction;
-        RaycastHit2D firstHit = Physics2D.BoxCast(transform.position, new Vector2(1.1f, 0.8f), 0, -_pushingDirection, _pushOffset, 1 << 10);
+        RaycastHit2D firstHit = Physics2D.BoxCast(transform.position, new Vector2(0.8f, 0.8f), 0, -_pushingDirection, _pushOffset, 1 << 10);
         RaycastHit2D secondHit = Physics2D.BoxCast(transform.position, new Vector2(0.8f, 0.8f), 0, -_pushingDirection, 0.01f, 1 << 10);
 
-        if (!_registerPush && firstHit.collider != null && secondHit.collider == null)
+        if (_interactionKeyPressed && firstHit.collider != null && secondHit.collider == null)
         {
-            AppData.InputController.OnInteraction += Push;
-            _registerPush = true;
-            _player = firstHit.collider.GetComponent<PlayerController>();
+            _pushing = true;
+            Push();
         }
 
-        if (_registerPush && (firstHit.collider == null || secondHit.collider != null))
+        if (!_interactionKeyPressed)
         {
-            AppData.InputController.OnInteraction -= Push;
-            _registerPush = false;
             ResetProperties();
         }
     }
 
     void Push() 
     {
-        _pushing = !_pushing;
+        _pushing = _interactionKeyPressed;
         if (_pushing)
         {
             gameObject.layer = _groundLayerMask;
@@ -121,10 +125,12 @@ public class HideableObject : MonoBehaviour
 
     void ResetProperties() 
     {
+        if(_pushing == false)
+            return;
+        _pushing = false;
         gameObject.layer = _onTop ? _groundLayerMask : _hideableLayerMask;
         _rb.sharedMaterial = null;
-        _rb.velocity = new Vector2(0, _rb.velocity.y);
-        _pushing = false;
+        _rb.velocity = new Vector2(0, _rb.velocity.y);    
         _player.PlayerState = _player.PlayerState == PlayerStates.Pushing ? _player.PlayerState = PlayerStates.Default : _player.PlayerState;
     }
 
@@ -133,7 +139,8 @@ public class HideableObject : MonoBehaviour
         Gizmos.DrawWireCube(transform.position + Vector3.up * _jumpLowerOffset, new Vector2(1, 1f));
         Gizmos.DrawWireCube(transform.position + Vector3.up * _jumpHigherOffset, new Vector2(1, 1f));
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position + ((Vector3)(-_pushingDirection) * _pushOffset), new Vector2(1.1f, 0.8f));
+        Gizmos.DrawWireCube(transform.position + ((Vector3)(-_pushingDirection) * _pushOffset), new Vector2(1f, 0.8f));
+        Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position + ((Vector3)(-_pushingDirection) * 0.01f), new Vector2(0.8f, 0.8f));
         Gizmos.color = Color.white;
     }

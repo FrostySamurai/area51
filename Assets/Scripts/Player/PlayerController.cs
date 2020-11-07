@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
 
         _playerState = PlayerStates.Default;
         AppData.InputController.OnJump += Jump;
-        AppData.InputController.OnDownKeyPressed += Crouch;
+        AppData.InputController.OnDownKey += Crouch;
         AppData.InputController.OnDownKeyReleased += ResetPlayerStateFromCrouch;
     }
 
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         if (AppData.InputController != null)
         {
             AppData.InputController.OnJump -= Jump;
-            AppData.InputController.OnDownKeyPressed -= Crouch;
+            AppData.InputController.OnDownKey -= Crouch;
             AppData.InputController.OnDownKeyReleased -= ResetPlayerStateFromCrouch;
         }
     }
