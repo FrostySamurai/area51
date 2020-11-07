@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         CheckDirection();
         CheckLadder();
 
-        if (_playerState != PlayerStates.Climbing && _rb.velocity.y < -0.1) 
+        if (_playerState != PlayerStates.Climbing && _rb.velocity.y < - 0.1f) 
         {
            _playerState = PlayerStates.Falling;
            _animator.SetBool(h_jump, true);
@@ -77,7 +77,14 @@ public class PlayerController : MonoBehaviour
             _readyToClimb = false;
             _animator.SetBool(h_jump, false);
         }
-       
+
+        if (_playerState != PlayerStates.Climbing && _rb.velocity.y >= 0.1) 
+        {       
+            if (_isGrounded = CheckGround())
+            {
+                _animator.SetBool(h_jump, false);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -214,7 +221,7 @@ public class PlayerController : MonoBehaviour
     Collider2D CheckGround() 
     {
         //Collider2D ground = Physics2D.OverlapCircle(_groundCheckPosition.position, _groundCheckRadius, _groundLayer);
-        RaycastHit2D groundHit = Physics2D.BoxCast(transform.position, new Vector2(1, 1f), 0, Vector2.down, 0.2f, 1 << 8);
+        RaycastHit2D groundHit = Physics2D.BoxCast(transform.position, new Vector2(1, 1f), 0, Vector2.down, 0.1f, 1 << 8);
         return groundHit.collider;
     }
 
