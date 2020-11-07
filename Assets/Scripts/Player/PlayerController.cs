@@ -3,40 +3,27 @@
 [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public class PlayerController : MonoBehaviour
 {
-    public enum PlayerState
-    {
-        None,
-        Crouch,
-        Hidden,
-        Climbing
-    }
-
     [SerializeField, Range(0, 0.5f)] private float _movementSmoothStep = .05f;
     [SerializeField] private float _playerSpeed = 5f;
     [SerializeField] private float _playerCrouchSpeed = 5f;
     [SerializeField] private float _playerClimbingSpeed = 5f;
     [SerializeField] private float _jumpForce = 500f;
-    [SerializeField] private float offset = 0;
+
     [SerializeField] private Transform _groundCheckPosition;
     [SerializeField] private float _groundCheckRadius;
     [SerializeField] private LayerMask _groundLayer;
 
-    private PlayerState _playerState;  
+    [SerializeField] private PlayerStates _playerState;  
     private Vector2 _velocity;
-
+    private float _bottomBound = 0;
     // components
     private Rigidbody2D _rb;
     private SpriteRenderer _spriteRenderer;
+    private BoxCollider2D _boxCollider;
     
     // flags
     private bool _isGrounded = true;
-    private bool _jumpFromLadge = true;
-
-    // controls
-    private float _horizontalMovement = 0;
-    private float _verticalMovement = 0;
-    private bool _jump = false;
-    private bool _isClimbing = false;
+    private bool _readyToClimb = false;
 
     //input controller
     private InputController _inputController;
@@ -50,19 +37,42 @@ public class PlayerController : MonoBehaviour
         } 
     }
 
-    private void Start()
+    void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _playerState = PlayerState.None;
+        _boxCollider = GetComponent<BoxCollider2D>();
+        _bottomBound = _boxCollider.offset.y - (_boxCollider.size.y / 2f);
+
+        _playerState = PlayerStates.Default;
+        InputController.OnJump += Jump;
+        InputController.OnCrouch += Crouch;
+    }
+
+    void OnDestroy()
+    {
+        if (InputController != null)
+        {
+            InputController.OnJump -= Jump;
+            InputController.OnCrouch -= Crouch;
+        }
     }
 
     public void Update()
     {
-        if (!_isGrounded && CheckGround())
+        CheckLadder();
+
+        if (_rb.velocity.y < 0) 
         {
-            _isGrounded = true;
+           _playerState = PlayerStates.Falling;
         }
+
+        if (_readyToClimb && InputController.VerticalMovement > 0) 
+        {
+            _playerState = PlayerStates.Climbing;
+            _readyToClimb = false;
+        }
+       
     }
 
     private void FixedUpdate()
@@ -73,17 +83,25 @@ public class PlayerController : MonoBehaviour
     void Movement() 
     {
         Vector2 move = Vector2.zero;
+        _rb.gravityScale = 1f;
         switch (_playerState)
         {
-            case PlayerState.None:
+            case PlayerStates.Falling:
+                _isGrounded = CheckGround();
                 move = HorizontalMovement();
-                Jump();               
+                if (_isGrounded)
+                    _playerState = PlayerStates.Default;
+                
                 break;
-            case PlayerState.Crouch:
-                CrouchMovement();
+            case PlayerStates.Default:
+                move = HorizontalMovement();
                 break;
-            case PlayerState.Climbing:
-                move = VerticalMovement();
+            case PlayerStates.Crouch:
+                move = CrouchMovement();
+                break;
+            case PlayerStates.Climbing:
+                _rb.gravityScale = 0f;
+                move = ClimbingMovement();
                 break;
         }
 
@@ -97,25 +115,41 @@ public class PlayerController : MonoBehaviour
         return velocity;
     }
 
-    Vector2 VerticalMovement() 
+    Vector2 ClimbingMovement() 
     {
         float verticalMovement = InputController.VerticalMovement * _playerClimbingSpeed;
-        float horizontalMovement = InputController.HorizontalMovement * _playerSpeed;
+        float horizontalMovement = InputController.HorizontalMovement * _playerClimbingSpeed;
         Vector2 velocity = new Vector2(horizontalMovement, verticalMovement);
         return velocity;
     }
 
-    void CrouchMovement() 
+    Vector2 CrouchMovement()
     {
-        
+        float horizontalMovement = InputController.HorizontalMovement * _playerCrouchSpeed;
+        Vector2 velocity = new Vector2(horizontalMovement, _rb.velocity.y);
+        return velocity;
+    }
+
+    void Crouch() 
+    {
+        if (_isGrounded && _playerState == PlayerStates.Default)
+        {
+            _playerState = PlayerStates.Crouch;
+            return;
+        }
+
+        if (_playerState == PlayerStates.Crouch)
+        {
+            _playerState = PlayerStates.Default;
+            return;
+        }
     }
 
     void Jump() 
     {
-        if (InputController.Jump && _isGrounded)
+        if (_isGrounded && _playerState == PlayerStates.Default)
         {
             _isGrounded = false;
-            InputController.Jump = false;
             _rb.AddForce(new Vector2(0f, _jumpForce));
         }
     }
@@ -126,18 +160,22 @@ public class PlayerController : MonoBehaviour
         return ground;
     }
 
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    void CheckLadder() 
     {
-        if (collision.CompareTag("Ladder")) 
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position + Vector3.up * _bottomBound, Vector2.up, 1f, ~(1 << 10));
+        if (hitInfo.collider && hitInfo.collider.gameObject.GetComponent<Ladder>())
         {
-            _playerState = PlayerState.Climbing;
+            if (_playerState != PlayerStates.Climbing)
+            {
+                _readyToClimb = true;
+            }        
         }
+        else 
+        {
+            if (_playerState == PlayerStates.Climbing)
+            {
+                _playerState = PlayerStates.Default;
+            }
+        }   
     }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        _playerState = PlayerState.None;
-    }
-
 }
