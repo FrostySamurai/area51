@@ -637,8 +637,8 @@ MonoBehaviour:
   - {fileID: 897663117}
   - {fileID: 519301338}
   _arrowOffset: 250
-  _animationPeriod: 3
-  _animationSpeed: 0.05
+  _animationPeriod: 5
+  _animationSpeed: 1
 --- !u!1 &717249599
 GameObject:
   m_ObjectHideFlags: 0
