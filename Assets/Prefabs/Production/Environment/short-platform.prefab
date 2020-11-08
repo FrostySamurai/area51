@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3856403843213883363}
   - component: {fileID: 3856403843213883388}
   - component: {fileID: 3856403843213883389}
+  - component: {fileID: 178210531}
   m_Layer: 8
   m_Name: short-platform
   m_TagString: Untagged
@@ -50,13 +51,13 @@ BoxCollider2D:
     border: {x: 0.17999999, y: 0.17, z: 0.17999999, w: 0.17}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 6.04, y: 0.75}
-    newSize: {x: 37.9, y: 0.75}
+    newSize: {x: 10, y: 1}
     adaptiveTilingThreshold: 0.955
     drawMode: 2
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 37.2, y: 0.75}
+  m_Size: {x: 10, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &3856403843213883389
 SpriteRenderer:
@@ -103,9 +104,35 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 37.9, y: 0.75}
+  m_Size: {x: 10, y: 1}
   m_AdaptiveModeThreshold: 0.955
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &178210531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3856403843213883390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: 00000000e512bcdb
+  m_ShapePath:
+  - {x: -5, y: -0.5, z: 0}
+  - {x: 5, y: -0.5, z: 0}
+  - {x: 5, y: 0.5, z: 0}
+  - {x: -5, y: 0.5, z: 0}
+  m_ShapePathHash: 0
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -39946
