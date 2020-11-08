@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        AppData.SceneLoader.LoadScene(SceneName.Level1);
+        AppData.SceneLoader.LoadScene(SceneName.TutorialLevel);
     }
 
     public void QuitApplication()
