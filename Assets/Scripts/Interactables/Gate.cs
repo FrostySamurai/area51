@@ -33,7 +33,6 @@ public class Gate : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Player")) 
         {
-            Debug.Log(collision.gameObject.layer);
             if (_isOpen && AppData.InputController.VerticalMovement > 0)
             {
                 AppData.SceneLoader.LoadScene(scene);
