@@ -24,14 +24,20 @@ public class SwitchButton : MonoBehaviour
             Debug.LogError($"Input controller is missing.");
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.tag == "Player")
+            return;
+
         if (_inputController != null)
             _inputController.OnInteractionPressed += Interact;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D other)
     {
+        if (other.tag == "Player")
+            return;
+
         if (_inputController != null)
             _inputController.OnInteractionPressed -= Interact;
     }
