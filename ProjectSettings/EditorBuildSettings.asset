@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Production/Level-Martin.unity
     guid: 25adc07c6e3c18d448aa42a486ddd469
+  - enabled: 1
+    path: Assets/_Scenes/Production/EndScene.unity
+    guid: 877127c5cdaba334d96a88e40fc194d3
   m_configObjects: {}
