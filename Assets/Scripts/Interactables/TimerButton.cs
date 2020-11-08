@@ -7,6 +7,7 @@ public class TimerButton : MonoBehaviour
     [SerializeField] private float _timerLength = 2f;
 
     private Collider2D _collider = null;
+    private AudioSource _audioSource = null;
     private InputController _inputController = null;
 
     public UnityEvent OnTimerStart = null;
@@ -22,6 +23,9 @@ public class TimerButton : MonoBehaviour
             Debug.LogError($"{name} is missing collider.");
         else if (!_collider.isTrigger)
             Debug.LogWarning($"Collider on {name} should be set to trigger.");
+
+        if (!TryGetComponent(out _audioSource))
+            Debug.LogWarning($"{name} is missing AudioSource.");
 
         _inputController = FindObjectOfType<InputController>();
         if (_inputController == null)
@@ -46,20 +50,29 @@ public class TimerButton : MonoBehaviour
         OnTimerEnd?.Invoke();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.tag != "Player")
+            return;
+
         if (_inputController != null)
             _inputController.OnInteractionPressed += Interact;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D other)
     {
+        if (other.tag != "Player")
+            return;
+
         if (_inputController != null)
             _inputController.OnInteractionPressed -= Interact;
     }
 
     private void Interact()
     {
+        if (_audioSource != null)
+            _audioSource.Play();
+
         if (TimeLeft > 0f)
         {
             TimeLeft = _timerLength;

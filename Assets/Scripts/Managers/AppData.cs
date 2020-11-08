@@ -4,5 +4,6 @@
     public static SceneLoader SceneLoader;
     public static InputController InputController;
     public static MessageDisplayer MessageDisplayer;
+    public static MusicManager MusicManager;
 }
 
