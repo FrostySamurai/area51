@@ -2,5 +2,6 @@
 {
     MainMenu = 0,
     TutorialLevel = 1,
-    Level1 =  1
+    Level1 = 2,
+    Level2 = 3
 }

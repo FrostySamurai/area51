@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/_Scenes/Production/Tutorial-Level.unity
     guid: c4a822c8ca07f9d49a3f1698a4d6cbab
   - enabled: 1
-    path: Assets/_Scenes/TestLevel.unity
-    guid: 9d61c6e842f1604429be515db3f0facf
+    path: Assets/_Scenes/Production/Level-Michal.unity
+    guid: 9b6cf4fed3f090d46b4474e4f22cbaba
+  - enabled: 1
+    path: Assets/_Scenes/Production/Level-Martin.unity
+    guid: 25adc07c6e3c18d448aa42a486ddd469
   m_configObjects: {}
