@@ -19,9 +19,15 @@ public class GameManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        GameOver = false;
         ToggleControllers(true);
         AppData.SceneLoader.RestartLevel();
+        StartCoroutine(WaitForFrame());
+    }
+
+    private System.Collections.IEnumerator WaitForFrame()
+    {
+        yield return null;
+        GameOver = false;
     }
 
     public void ToggleControllers(bool enabled)

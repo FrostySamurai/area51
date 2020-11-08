@@ -43,7 +43,9 @@ public class PlayerDetector : MonoBehaviour
         if (_requireVision && !IsPlayerInVision(player))
             return;
 
-        AppData.GameManager.PlayerDetected();
+        if (!AppData.GameManager.GameOver)
+            AppData.GameManager.PlayerDetected();
+        
     }
 
     private bool IsPlayerInVision(Collider2D player)

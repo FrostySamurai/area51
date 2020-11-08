@@ -33,7 +33,7 @@ public class MessageDisplayer : MonoBehaviour
 
         _text.text = message;
         _isMessageDisplayed = true;
-
+        print(_messagesToDisplay.Count);
         gameObject.SetActive(true);
     }
 
