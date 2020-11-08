@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class InputController : MonoBehaviour
 {
@@ -69,6 +69,17 @@ public class InputController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.K))
         {
             OnInteractionReleased?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            AppData.GameManager.RestartLevel();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(SceneManager.GetActiveScene().buildIndex != (int)SceneName.MainMenu)
+                AppData.SceneLoader.LoadScene(SceneName.MainMenu);
         }
     }
 }
