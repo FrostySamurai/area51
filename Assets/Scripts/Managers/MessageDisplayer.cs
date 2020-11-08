@@ -10,7 +10,7 @@ public class MessageDisplayer : MonoBehaviour
     private bool _isMessageDisplayed = false;
     private bool _loadMainMenu = false;
 
-    public event Action OnMessagesShown = null;
+    public GameObject ObjectToActivate = null;
 
     private void Awake()
     {
@@ -45,7 +45,6 @@ public class MessageDisplayer : MonoBehaviour
 
         _text.text = message;
         _isMessageDisplayed = true;
-        print(_messagesToDisplay.Count);
         gameObject.SetActive(true);
     }
 
@@ -69,7 +68,12 @@ public class MessageDisplayer : MonoBehaviour
         gameObject.SetActive(false);
 
         AppData.GameManager.ToggleControllers(true);
-        OnMessagesShown?.Invoke();
+
+        if (ObjectToActivate != null)
+        {
+            ObjectToActivate.SetActive(true);
+            ObjectToActivate = null;
+        }
 
         if (_loadMainMenu)
         {

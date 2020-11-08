@@ -8,13 +8,8 @@ public class PlayerCollider : MonoBehaviour
 
     private void Awake()
     {
-        AppData.MessageDisplayer.OnMessagesShown += HandleMessagesShown;
+        AppData.MessageDisplayer.ObjectToActivate = gameObject;
         gameObject.SetActive(false);
-    }
-
-    private void HandleMessagesShown()
-    {
-        gameObject.SetActive(true);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
