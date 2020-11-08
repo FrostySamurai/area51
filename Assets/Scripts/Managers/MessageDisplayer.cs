@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MessageDisplayer : MonoBehaviour
@@ -7,6 +8,9 @@ public class MessageDisplayer : MonoBehaviour
 
     private Queue<string> _messagesToDisplay = new Queue<string>();
     private bool _isMessageDisplayed = false;
+    private bool _loadMainMenu = false;
+
+    public event Action OnMessagesShown = null;
 
     private void Awake()
     {
@@ -19,6 +23,14 @@ public class MessageDisplayer : MonoBehaviour
     {
         if (AppData.InputController != null)
             AppData.InputController.OnInteractionPressed -= ConfirmMessage;
+    }
+
+    public void DisplayAfterword()
+    {
+        DisplayMessage("Hmmmmmmmmm, so Area51 was Santa's workshop all along. And the rumored aliens are, in reality, Santa's little helper elves!?");
+        DisplayMessage("Maybe I should seriously check my facts and stop believing everything I see and sounds interesting.");
+        DisplayMessage("Thanks for playing!");
+        _loadMainMenu = true;
     }
 
     public void DisplayMessage(string message)
@@ -57,6 +69,13 @@ public class MessageDisplayer : MonoBehaviour
         gameObject.SetActive(false);
 
         AppData.GameManager.ToggleControllers(true);
+        OnMessagesShown?.Invoke();
+
+        if (_loadMainMenu)
+        {
+            _loadMainMenu = false;
+            AppData.SceneLoader.LoadScene(SceneName.MainMenu);
+        }
     }
 }
 
