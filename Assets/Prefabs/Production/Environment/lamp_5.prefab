@@ -120,7 +120,8 @@ MonoBehaviour:
   _raycastAngleStep: 5
   _raycastIgnore:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 14849
+  _angleOffset: 3
 --- !u!1 &3023134041318220552
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +242,8 @@ MonoBehaviour:
   _raycastAngleStep: 5
   _raycastIgnore:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 14849
+  _angleOffset: 3
 --- !u!1 &4759890199701887837
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +451,8 @@ MonoBehaviour:
   _raycastAngleStep: 5
   _raycastIgnore:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 14849
+  _angleOffset: 3
 --- !u!1 &5781665821072979997
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,7 +573,8 @@ MonoBehaviour:
   _raycastAngleStep: 5
   _raycastIgnore:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 14849
+  _angleOffset: 3
 --- !u!1 &8863118902748054681
 GameObject:
   m_ObjectHideFlags: 0
@@ -691,4 +695,5 @@ MonoBehaviour:
   _raycastAngleStep: 5
   _raycastIgnore:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 14849
+  _angleOffset: 3

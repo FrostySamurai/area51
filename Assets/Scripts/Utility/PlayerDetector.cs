@@ -7,6 +7,7 @@ public class PlayerDetector : MonoBehaviour
     [SerializeField] private bool _requireVision = false;
     [SerializeField] private float _raycastAngleStep = 5f;
     [SerializeField] private LayerMask _raycastIgnore = new LayerMask();
+    [SerializeField] private float _angleOffset = 1.5f;
 
     private List<Vector2> _raycastDirections = new List<Vector2>();
     private float _raycastLength = 0f;
@@ -22,6 +23,11 @@ public class PlayerDetector : MonoBehaviour
 
         CalculateRaycastDirections(light);
         _raycastLength = light.pointLightOuterRadius;
+    }
+
+    public void  ToggleLight()
+    {
+        gameObject.SetActive(!gameObject.activeInHierarchy);
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -59,7 +65,7 @@ public class PlayerDetector : MonoBehaviour
 
     private void CalculateRaycastDirections(Light2D light)
     {
-        float currentAngle = (light.pointLightOuterAngle / 2) * Mathf.Deg2Rad + 1.5f;
+        float currentAngle = (light.pointLightOuterAngle / 2) * Mathf.Deg2Rad + _angleOffset;
         int raycastCount = Mathf.FloorToInt(light.pointLightOuterAngle / _raycastAngleStep);
 
         for (int i = 0; i < raycastCount; i++)

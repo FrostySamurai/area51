@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5459458735750114041}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &4529813391608435160
 MonoBehaviour:
@@ -57,7 +57,7 @@ MonoBehaviour:
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
   m_ShadowIntensity: 1
-  m_ShadowVolumeIntensity: 0
+  m_ShadowVolumeIntensity: 1
   m_PointLightInnerAngle: 50
   m_PointLightOuterAngle: 160
   m_PointLightInnerRadius: 0
@@ -120,7 +120,8 @@ MonoBehaviour:
   _raycastAngleStep: 5
   _raycastIgnore:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 14849
+  _angleOffset: 3
 --- !u!1 &1886405994654764438
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +153,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5459458735750114041}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &1080935698373378305
 MonoBehaviour:
@@ -178,7 +179,7 @@ MonoBehaviour:
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
   m_ShadowIntensity: 1
-  m_ShadowVolumeIntensity: 0
+  m_ShadowVolumeIntensity: 1
   m_PointLightInnerAngle: 50
   m_PointLightOuterAngle: 160
   m_PointLightInnerRadius: 0
@@ -241,7 +242,8 @@ MonoBehaviour:
   _raycastAngleStep: 5
   _raycastIgnore:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 14849
+  _angleOffset: 3
 --- !u!1 &7077382500671934235
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,11 +270,11 @@ Transform:
   m_GameObject: {fileID: 7077382500671934235}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.77, y: -2.63, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4524, y: 1.4524, z: 1.4524}
   m_Children:
+  - {fileID: 5523479243505934253}
   - {fileID: 6970477284563100542}
   - {fileID: 5452653516985943480}
-  - {fileID: 5523479243505934253}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -358,7 +360,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5459458735750114041}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &8438074668499444508
 MonoBehaviour:
@@ -384,7 +386,7 @@ MonoBehaviour:
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
   m_ShadowIntensity: 1
-  m_ShadowVolumeIntensity: 0
+  m_ShadowVolumeIntensity: 1
   m_PointLightInnerAngle: 50
   m_PointLightOuterAngle: 160
   m_PointLightInnerRadius: 0
@@ -447,4 +449,5 @@ MonoBehaviour:
   _raycastAngleStep: 5
   _raycastIgnore:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 14849
+  _angleOffset: 3
