@@ -51,7 +51,13 @@ public class SwitchButton : MonoBehaviour
         if (_inputController != null)
             _inputController.OnInteractionPressed -= Interact;
     }
-    
+
+    private void OnDestroy()
+    {
+        if (_inputController != null)
+            _inputController.OnInteractionPressed -= Interact;
+    }
+
     public void SwitchEnd() =>
         _isSwitching = false;
 

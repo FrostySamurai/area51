@@ -68,6 +68,12 @@ public class TimerButton : MonoBehaviour
             _inputController.OnInteractionPressed -= Interact;
     }
 
+    private void OnDestroy()
+    {
+        if (_inputController != null)
+            _inputController.OnInteractionPressed -= Interact;
+    }
+
     private void Interact()
     {
         if (_audioSource != null)
