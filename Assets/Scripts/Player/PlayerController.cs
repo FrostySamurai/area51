@@ -139,6 +139,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerStates.Pushing:
                 move = PushingMovement();
+                _animator.SetFloat(h_VerticalMovement, Mathf.Abs(AppData.InputController.VerticalMovement));
                 _animator.SetBool(h_push, true);
                 break;
             case PlayerStates.Hidden:
@@ -154,6 +155,7 @@ public class PlayerController : MonoBehaviour
                 move = ClimbingMovement();
                 _animator.SetFloat(h_VerticalMovement, Mathf.Abs(AppData.InputController.VerticalMovement));
                 _animator.SetBool(h_climb, true) ;
+                _animator.SetBool(h_grounded, false);
                 break;
         }
 
