@@ -20,8 +20,8 @@ public class PlayerDetector : MonoBehaviour
             return;
         }
 
-       // CalculateRaycastDirections(light);
-       // _raycastLength = light.pointLightOuterRadius;
+        CalculateRaycastDirections(light);
+        _raycastLength = light.pointLightOuterRadius;
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -42,19 +42,18 @@ public class PlayerDetector : MonoBehaviour
 
     private bool IsPlayerInVision(Collider2D player)
     {
-        //float direction = player.transform.position.x < transform.position.x ? -1 : 1;
-        //foreach (Vector2 raycastDirection in _raycastDirections)
-        //    if (RaycastForPlayer(transform.position, new Vector2(raycastDirection.x * direction, raycastDirection.y),player))
-        //        return true;
-
-        return player.GetComponent<PlayerController>().PlayerState != PlayerStates.Hidden;
+        float direction = player.transform.position.x < transform.position.x ? -1 : 1;
+        foreach (Vector2 raycastDirection in _raycastDirections)
+            if (RaycastForPlayer(transform.position, new Vector2(raycastDirection.x * direction, raycastDirection.y), player))
+                return player.GetComponent<PlayerController>().PlayerState == PlayerStates.Hidden ? false : true;
+        return false;
+        //return player.GetComponent<PlayerController>().PlayerState != PlayerStates.Hidden;
     }
 
     private bool RaycastForPlayer(Vector2 position, Vector2 direction, Collider2D player)
     {
         Debug.DrawRay(position, direction * _raycastLength, Color.cyan);
         RaycastHit2D hit = Physics2D.Raycast(position, direction, _raycastLength, ~_raycastIgnore);
-
         return hit.collider == player;
     }
 

@@ -37,6 +37,11 @@ public class GameManager : MonoBehaviour
             enemy.enabled = enabled;
     }
 
+    public void SetLevelIsDone(bool value) 
+    {
+        LevelIsDone = value;
+    }
+
     public void StartGame()
     {
         AppData.SceneLoader.LoadScene(SceneName.Level1);
