@@ -65,6 +65,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        _rb.velocity = Vector2.zero;
+    }
+
     public void Update()
     {
         CheckDirection();
